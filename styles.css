@@ -1,0 +1,4 @@
+/* Honor AI Labs - Styles placeholder */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', sans-serif; color: #1a1a2e; background: #fff; }
+.container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }

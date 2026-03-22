@@ -1062,6 +1062,55 @@ Style: Professional, eye-catching, high CTR thumbnail`;
         if (!textarea.readOnly) textarea.focus();
     });
 
+    // Publish to news site
+    $('btnPublishToNews').addEventListener('click', async () => {
+        const script = $('generatedScript').value;
+        if (!script) return;
+
+        const btn = $('btnPublishToNews');
+        btn.disabled = true;
+        btn.innerHTML = '<span class="btn-icon">&uarr;</span> Publishing...';
+
+        try {
+            const showNames = {
+                ai: "Connor's AI Show",
+                fat: "The Last Addiction",
+                realestate: "SCV 123 Seller Show",
+            };
+
+            const response = await fetch('/api/save-episode', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    showType: state.currentShowType,
+                    showName: showNames[state.currentShowType] || state.currentShowType,
+                    script,
+                    youtubeUrl: $('showYoutubeUrl').value.trim(),
+                    generatedAt: new Date().toISOString(),
+                }),
+            });
+
+            if (!response.ok) {
+                const err = await response.json();
+                throw new Error(err.error || 'Publish failed');
+            }
+
+            btn.innerHTML = '<span class="btn-icon">&check;</span> Published!';
+            btn.style.background = 'var(--success)';
+            setTimeout(() => {
+                btn.innerHTML = '<span class="btn-icon">&uarr;</span> Publish to News Site';
+                btn.style.background = '';
+                btn.disabled = false;
+            }, 3000);
+        } catch (err) {
+            btn.innerHTML = '<span class="btn-icon">&times;</span> Error: ' + err.message;
+            setTimeout(() => {
+                btn.innerHTML = '<span class="btn-icon">&uarr;</span> Publish to News Site';
+                btn.disabled = false;
+            }, 3000);
+        }
+    });
+
     // Copy script
     $('btnCopyScript').addEventListener('click', () => {
         navigator.clipboard.writeText($('generatedScript').value).then(() => {

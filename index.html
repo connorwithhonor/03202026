@@ -139,10 +139,21 @@
             <div id="showScriptResult" class="studio-section" style="display:none;">
                 <h3>Your Script is Ready</h3>
                 <textarea id="generatedScript" class="generated-script-area" readonly></textarea>
+
+                <!-- YouTube URL for news site embed -->
+                <div class="youtube-url-section" style="margin-top: 12px;">
+                    <label style="font-size: 13px; color: #a0a0c0; display: block; margin-bottom: 6px;">YouTube URL (paste after upload - embeds on HonorNewsNow.com)</label>
+                    <input type="text" id="showYoutubeUrl" placeholder="https://youtube.com/watch?v=..." class="text-input" style="margin-bottom: 8px;">
+                </div>
+
                 <div class="script-actions">
                     <button class="menu-btn primary-btn" id="btnSendToTeleprompter">
                         <span class="btn-icon">&rarr;</span>
                         Send to Teleprompter
+                    </button>
+                    <button class="menu-btn secondary-btn" id="btnPublishToNews" style="background: linear-gradient(135deg, #00B894, #00D2FF); border-color: transparent;">
+                        <span class="btn-icon">&uarr;</span>
+                        Publish to News Site
                     </button>
                     <button class="menu-btn secondary-btn" id="btnEditScript">
                         <span class="btn-icon">&hellip;</span>

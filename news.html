@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Honor News Now - Daily Shows by Connor</title>
+    <meta name="description" content="Daily AI, health, and real estate content from Connor. Three shows, every day. AI alignment, food addiction recovery, and seller-only real estate education.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0a1a;
+            --bg-card: #141428;
+            --bg-card-hover: #1a1a35;
+            --text: #ffffff;
+            --text-secondary: #a0a0c0;
+            --text-muted: #606080;
+            --ai-color: #6C5CE7;
+            --health-color: #00B894;
+            --re-color: #C0392B;
+            --accent: #00D2FF;
+            --radius: 16px;
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            -webkit-font-smoothing: antialiased;
+            line-height: 1.6;
+        }
+
+        /* ======== HEADER ======== */
+        .site-header {
+            background: linear-gradient(180deg, rgba(10,10,26,1) 0%, rgba(10,10,26,0.95) 100%);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(20px);
+        }
+
+        .header-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .site-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--text);
+        }
+
+        .logo-mark {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--ai-color), var(--accent));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 18px;
+        }
+
+        .site-title {
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .site-title span {
+            color: var(--accent);
+        }
+
+        .header-links {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .header-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .header-links a:hover {
+            color: var(--text);
+        }
+
+        /* ======== HERO ======== */
+        .hero {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 24px 40px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: clamp(28px, 5vw, 48px);
+            font-weight: 900;
+            letter-spacing: -1px;
+            line-height: 1.1;
+            margin-bottom: 16px;
+        }
+
+        .hero h1 .highlight {
+            background: linear-gradient(135deg, var(--ai-color), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            color: var(--text-secondary);
+            font-size: 18px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .date-badge {
+            display: inline-block;
+            background: rgba(108,92,231,0.15);
+            border: 1px solid rgba(108,92,231,0.3);
+            color: var(--accent);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        /* ======== SHOW TABS ======== */
+        .show-tabs {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px 32px;
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .show-tab {
+            padding: 10px 24px;
+            border-radius: 24px;
+            border: 2px solid rgba(255,255,255,0.1);
+            background: transparent;
+            color: var(--text-secondary);
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .show-tab:hover {
+            border-color: rgba(255,255,255,0.2);
+            color: var(--text);
+        }
+
+        .show-tab.active {
+            color: #fff;
+        }
+
+        .show-tab[data-show="all"].active {
+            background: rgba(255,255,255,0.1);
+            border-color: rgba(255,255,255,0.3);
+        }
+
+        .show-tab[data-show="ai"].active {
+            background: rgba(108,92,231,0.2);
+            border-color: var(--ai-color);
+            color: #a29bfe;
+        }
+
+        .show-tab[data-show="fat"].active {
+            background: rgba(0,184,148,0.2);
+            border-color: var(--health-color);
+            color: #55efc4;
+        }
+
+        .show-tab[data-show="realestate"].active {
+            background: rgba(192,57,43,0.2);
+            border-color: var(--re-color);
+            color: #e74c3c;
+        }
+
+        /* ======== EPISODES GRID ======== */
+        .episodes-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px 60px;
+        }
+
+        .episodes-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 24px;
+        }
+
+        @media (min-width: 768px) {
+            .episodes-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .episodes-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .episode-card {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.06);
+            transition: transform 0.2s, border-color 0.2s;
+            cursor: pointer;
+        }
+
+        .episode-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(255,255,255,0.12);
+        }
+
+        .card-banner {
+            height: 8px;
+            width: 100%;
+        }
+
+        .card-banner.ai { background: linear-gradient(90deg, var(--ai-color), var(--accent)); }
+        .card-banner.fat { background: linear-gradient(90deg, var(--health-color), #00D2FF); }
+        .card-banner.realestate { background: linear-gradient(90deg, #D4A574, var(--re-color)); }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .card-show-label {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .card-show-label.ai { color: #a29bfe; }
+        .card-show-label.fat { color: #55efc4; }
+        .card-show-label.realestate { color: #e74c3c; }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 10px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .card-preview {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 16px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .card-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 12px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .card-date {
+            color: var(--text-muted);
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .card-read-btn {
+            color: var(--accent);
+            font-size: 12px;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        /* ======== EPISODE MODAL ======== */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.85);
+            z-index: 200;
+            overflow-y: auto;
+            backdrop-filter: blur(10px);
+        }
+
+        .modal-overlay.active {
+            display: block;
+        }
+
+        .modal-content {
+            max-width: 800px;
+            margin: 40px auto;
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            border: 1px solid rgba(255,255,255,0.1);
+            overflow: hidden;
+        }
+
+        .modal-banner {
+            height: 6px;
+        }
+
+        .modal-header {
+            padding: 24px 32px;
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .modal-header h2 {
+            font-size: 24px;
+            font-weight: 800;
+            line-height: 1.3;
+        }
+
+        .modal-close {
+            background: rgba(255,255,255,0.1);
+            border: none;
+            color: var(--text);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            font-size: 18px;
+            cursor: pointer;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-meta {
+            padding: 0 32px 16px;
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .modal-meta .show-badge {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 4px 10px;
+            border-radius: 6px;
+        }
+
+        .show-badge.ai { background: rgba(108,92,231,0.2); color: #a29bfe; }
+        .show-badge.fat { background: rgba(0,184,148,0.2); color: #55efc4; }
+        .show-badge.realestate { background: rgba(192,57,43,0.2); color: #e74c3c; }
+
+        .modal-meta .date {
+            color: var(--text-muted);
+            font-size: 13px;
+        }
+
+        .modal-script {
+            padding: 0 32px 32px;
+            white-space: pre-wrap;
+            font-size: 16px;
+            line-height: 1.8;
+            color: var(--text-secondary);
+        }
+
+        .modal-actions {
+            padding: 16px 32px 24px;
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .modal-btn {
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.15);
+            background: rgba(255,255,255,0.05);
+            color: var(--text);
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .modal-btn:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .modal-btn.primary {
+            background: var(--ai-color);
+            border-color: var(--ai-color);
+        }
+
+        /* ======== EMPTY STATE ======== */
+        .empty-state {
+            text-align: center;
+            padding: 80px 24px;
+            color: var(--text-muted);
+        }
+
+        .empty-state h3 {
+            font-size: 20px;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .empty-state p {
+            font-size: 14px;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        /* ======== FOOTER ======== */
+        .site-footer {
+            border-top: 1px solid rgba(255,255,255,0.06);
+            padding: 40px 24px;
+            text-align: center;
+        }
+
+        .footer-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        .footer-copy {
+            color: var(--text-muted);
+            font-size: 12px;
+        }
+
+        /* ======== YOUTUBE EMBED ======== */
+        .video-embed {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%; /* 16:9 */
+            background: #000;
+        }
+
+        .video-embed iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .card-video {
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .modal-video {
+            margin: 0 32px 20px;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        @media (max-width: 600px) {
+            .modal-video { margin: 0 20px 16px; }
+        }
+
+        /* ======== LOADING ======== */
+        .loading-spinner {
+            display: flex;
+            justify-content: center;
+            padding: 60px;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(255,255,255,0.1);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* ======== RESPONSIVE ======== */
+        @media (max-width: 600px) {
+            .header-links { display: none; }
+            .hero { padding: 40px 16px 24px; }
+            .show-tabs { padding: 0 16px 24px; }
+            .episodes-container { padding: 0 16px 40px; }
+            .modal-content { margin: 16px; }
+            .modal-header { padding: 20px; }
+            .modal-script { padding: 0 20px 20px; }
+            .modal-actions { padding: 12px 20px 20px; }
+            .modal-meta { padding: 0 20px 12px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header class="site-header">
+        <div class="header-inner">
+            <a href="/" class="site-logo">
+                <div class="logo-mark">HN</div>
+                <div class="site-title">Honor <span>News Now</span></div>
+            </a>
+            <nav class="header-links">
+                <a href="https://connorwithhonor.com" target="_blank">ConnorWithHonor</a>
+                <a href="https://scv123.com" target="_blank">SCV123</a>
+                <a href="https://codedbyconnor.com" target="_blank">CodedByConnor</a>
+                <a href="https://honorelevate.com" target="_blank">HonorElevate</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="date-badge" id="todayDate"></div>
+        <h1>Three Shows. <span class="highlight">Every Day.</span></h1>
+        <p>AI alignment, food addiction recovery, and seller-only real estate education. Real content from a real person.</p>
+    </section>
+
+    <!-- SHOW FILTER TABS -->
+    <div class="show-tabs">
+        <button class="show-tab active" data-show="all">All Shows</button>
+        <button class="show-tab" data-show="ai">AI Show</button>
+        <button class="show-tab" data-show="fat">Last Addiction</button>
+        <button class="show-tab" data-show="realestate">SCV 123 Seller</button>
+    </div>
+
+    <!-- EPISODES -->
+    <div class="episodes-container">
+        <div class="loading-spinner" id="loadingSpinner">
+            <div class="spinner"></div>
+        </div>
+        <div class="episodes-grid" id="episodesGrid" style="display:none;"></div>
+        <div class="empty-state" id="emptyState" style="display:none;">
+            <h3>No episodes yet</h3>
+            <p>Episodes appear here automatically when generated through the teleprompter app. Check back soon!</p>
+        </div>
+    </div>
+
+    <!-- EPISODE MODAL -->
+    <div class="modal-overlay" id="episodeModal">
+        <div class="modal-content">
+            <div class="modal-banner" id="modalBanner"></div>
+            <div class="modal-header">
+                <h2 id="modalTitle"></h2>
+                <button class="modal-close" id="modalClose">&times;</button>
+            </div>
+            <div class="modal-meta">
+                <span class="show-badge" id="modalBadge"></span>
+                <span class="date" id="modalDate"></span>
+            </div>
+            <div id="modalVideoContainer"></div>
+            <div class="modal-actions">
+                <button class="modal-btn" id="btnCopyEpisode">Copy Script</button>
+                <button class="modal-btn" id="btnShareEpisode">Share</button>
+                <a class="modal-btn" id="btnWatchYouTube" href="#" target="_blank" style="display:none; text-decoration:none;">Watch on YouTube</a>
+            </div>
+            <div class="modal-script" id="modalScript"></div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="footer-links">
+                <a href="https://connorwithhonor.com" target="_blank">ConnorWithHonor.com</a>
+                <a href="https://scv123.com" target="_blank">SCV123.com</a>
+                <a href="https://codedbyconnor.com" target="_blank">CodedByConnor.com</a>
+                <a href="https://honorelevate.com" target="_blank">HonorElevate.com</a>
+                <a href="https://thelastaddiction.com" target="_blank">TheLastAddiction.com</a>
+            </div>
+            <p class="footer-copy">&copy; <span id="footerYear"></span> Connor With Honor. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+    (function() {
+        'use strict';
+
+        const SHOW_NAMES = {
+            ai: "Connor's AI Show",
+            fat: "The Last Addiction",
+            realestate: "SCV 123 Seller Show",
+        };
+
+        const SHOW_LABELS = {
+            ai: "AI Show",
+            fat: "Last Addiction",
+            realestate: "SCV 123 Seller",
+        };
+
+        let allEpisodes = [];
+        let currentFilter = 'all';
+
+        function getYouTubeId(url) {
+            if (!url) return null;
+            const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([a-zA-Z0-9_-]{11})/);
+            return match ? match[1] : null;
+        }
+
+        function youtubeEmbed(url, cssClass) {
+            const id = getYouTubeId(url);
+            if (!id) return '';
+            return `<div class="video-embed ${cssClass || ''}"><iframe src="https://www.youtube.com/embed/${id}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>`;
+        }
+
+        // Set today's date
+        const today = new Date();
+        document.getElementById('todayDate').textContent = today.toLocaleDateString('en-US', {
+            weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+        });
+        document.getElementById('footerYear').textContent = today.getFullYear();
+
+        // Tab filtering
+        document.querySelectorAll('.show-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.show-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                currentFilter = tab.dataset.show;
+                renderEpisodes();
+            });
+        });
+
+        // Load episodes
+        async function loadEpisodes() {
+            try {
+                const response = await fetch('/api/get-episodes');
+                if (!response.ok) throw new Error('Failed to load');
+                const data = await response.json();
+                allEpisodes = data.episodes || [];
+            } catch (err) {
+                console.warn('Could not load episodes:', err.message);
+                allEpisodes = [];
+            }
+
+            document.getElementById('loadingSpinner').style.display = 'none';
+            renderEpisodes();
+        }
+
+        function renderEpisodes() {
+            const grid = document.getElementById('episodesGrid');
+            const empty = document.getElementById('emptyState');
+
+            const filtered = currentFilter === 'all'
+                ? allEpisodes
+                : allEpisodes.filter(ep => ep.showType === currentFilter);
+
+            if (filtered.length === 0) {
+                grid.style.display = 'none';
+                empty.style.display = 'block';
+                return;
+            }
+
+            empty.style.display = 'none';
+            grid.style.display = 'grid';
+            grid.innerHTML = '';
+
+            filtered.forEach((ep, index) => {
+                const card = document.createElement('div');
+                card.className = 'episode-card';
+                card.setAttribute('data-index', index);
+
+                const title = extractTitle(ep.script, ep.showType);
+                const preview = extractPreview(ep.script);
+                const date = new Date(ep.generatedAt).toLocaleDateString('en-US', {
+                    month: 'short', day: 'numeric', year: 'numeric'
+                });
+
+                const videoHtml = ep.youtubeUrl ? youtubeEmbed(ep.youtubeUrl, 'card-video') : '';
+
+                card.innerHTML = `
+                    <div class="card-banner ${ep.showType}"></div>
+                    ${videoHtml}
+                    <div class="card-body">
+                        <div class="card-show-label ${ep.showType}">${SHOW_LABELS[ep.showType] || ep.showType}</div>
+                        <div class="card-title">${escapeHtml(title)}</div>
+                        <div class="card-preview">${escapeHtml(preview)}</div>
+                        <div class="card-meta">
+                            <span class="card-date">${date}</span>
+                            <span class="card-read-btn">Read Full Script &rarr;</span>
+                        </div>
+                    </div>
+                `;
+
+                card.addEventListener('click', (e) => {
+                    // Don't open modal if they clicked the video
+                    if (e.target.closest('.video-embed')) return;
+                    openEpisode(ep);
+                });
+                grid.appendChild(card);
+            });
+        }
+
+        function extractTitle(script, showType) {
+            // Grab the first meaningful line as a title
+            const lines = script.split('\n').filter(l => l.trim().length > 5);
+            if (lines.length > 0) {
+                let title = lines[0].trim();
+                // Clean up common script markers
+                title = title.replace(/^(hook|intro|welcome|hey|what's up|yo)[:\-,]?\s*/i, '');
+                if (title.length > 80) title = title.substring(0, 77) + '...';
+                return title || SHOW_NAMES[showType] || 'Episode';
+            }
+            return SHOW_NAMES[showType] || 'Episode';
+        }
+
+        function extractPreview(script) {
+            // Get first ~200 chars skipping the title line
+            const lines = script.split('\n').filter(l => l.trim().length > 0);
+            const previewLines = lines.slice(1, 5).join(' ').trim();
+            if (previewLines.length > 200) return previewLines.substring(0, 197) + '...';
+            return previewLines || lines[0] || '';
+        }
+
+        function openEpisode(ep) {
+            const modal = document.getElementById('episodeModal');
+            const title = extractTitle(ep.script, ep.showType);
+            const date = new Date(ep.generatedAt).toLocaleDateString('en-US', {
+                weekday: 'long', month: 'long', day: 'numeric', year: 'numeric'
+            });
+
+            document.getElementById('modalBanner').className = 'modal-banner ' + ep.showType;
+            document.getElementById('modalTitle').textContent = title;
+
+            const badge = document.getElementById('modalBadge');
+            badge.className = 'show-badge ' + ep.showType;
+            badge.textContent = SHOW_LABELS[ep.showType] || ep.showType;
+
+            document.getElementById('modalDate').textContent = date;
+            document.getElementById('modalScript').textContent = ep.script;
+
+            // Video embed
+            const videoContainer = document.getElementById('modalVideoContainer');
+            const ytBtn = document.getElementById('btnWatchYouTube');
+            if (ep.youtubeUrl && getYouTubeId(ep.youtubeUrl)) {
+                videoContainer.innerHTML = youtubeEmbed(ep.youtubeUrl, 'modal-video');
+                ytBtn.href = ep.youtubeUrl;
+                ytBtn.style.display = 'inline-block';
+            } else {
+                videoContainer.innerHTML = '';
+                ytBtn.style.display = 'none';
+            }
+
+            // Copy button
+            document.getElementById('btnCopyEpisode').onclick = () => {
+                navigator.clipboard.writeText(ep.script).then(() => {
+                    document.getElementById('btnCopyEpisode').textContent = 'Copied!';
+                    setTimeout(() => document.getElementById('btnCopyEpisode').textContent = 'Copy Script', 1500);
+                });
+            };
+
+            // Share button
+            document.getElementById('btnShareEpisode').onclick = () => {
+                if (navigator.share) {
+                    navigator.share({
+                        title: title,
+                        text: extractPreview(ep.script),
+                        url: window.location.href,
+                    });
+                } else {
+                    navigator.clipboard.writeText(window.location.href).then(() => {
+                        document.getElementById('btnShareEpisode').textContent = 'Link Copied!';
+                        setTimeout(() => document.getElementById('btnShareEpisode').textContent = 'Share', 1500);
+                    });
+                }
+            };
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Close modal
+        document.getElementById('modalClose').addEventListener('click', closeModal);
+        document.getElementById('episodeModal').addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) closeModal();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
+
+        function closeModal() {
+            document.getElementById('episodeModal').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function escapeHtml(str) {
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+
+        // Boot
+        loadEpisodes();
+    })();
+    </script>
+</body>
+</html>

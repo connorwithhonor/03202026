@@ -5,8 +5,11 @@ const CONNOR_CONTEXT = `Connor's Properties & Links:
 - CodedByConnor.com - https://codedbyconnor.com (AI & tech solutions)
 - ConnorWithHonor.com - https://connorwithhonor.com (personal brand)
 - HonorElevate.com - https://honorelevate.com (coaching & elevation)
-- SCV123.com - https://scv123.com (Santa Clarita Valley community)
+- SCV123.com - https://scv123.com (Santa Clarita Valley real estate - Selling as Easy as SCV 123)
 - TheLastAddiction.com - Food addiction recovery
+
+For real estate content: Emphasize SCV123.com prominently. Position Connor as a dedicated seller's agent.
+Focus on education, protecting seller equity, and the SCV 123 selling system.
 
 Always include at least 2-3 of these links naturally in the content.
 YouTube content should reference ALL properties.`;

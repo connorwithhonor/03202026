@@ -101,6 +101,15 @@
         showScreen('showGenScreen');
     });
 
+    $('btnRealEstateShow').addEventListener('click', () => {
+        state.currentShowType = 'realestate';
+        $('showGenTitle').textContent = 'SCV 123 Seller Show';
+        $('showGenSubtitle').textContent = "Today's Real Estate Seller Show";
+        $('showGenDesc').textContent = 'Scans the latest real estate news, market data, NAR updates, commission changes, and broker news. Builds an educational show script positioning you as the dedicated seller\'s agent with the SCV 123 system.';
+        resetShowGenerator();
+        showScreen('showGenScreen');
+    });
+
     // ==========================================
     // SCRIPT ENTRY CONTROLS
     // ==========================================

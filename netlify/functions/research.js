@@ -27,6 +27,22 @@ const SEARCH_SOURCES = {
         ],
         subreddits: ['fasting', 'intermittentfasting', 'loseit', 'fitness', 'over50fitness', 'foodaddiction', 'keto'],
         keywords: ['food addiction', 'fasting', 'weight loss', 'carb restriction', 'muscle mass', 'over 50', 'weightlifting', 'transformation', 'recovery'],
+    },
+    realestate: {
+        queries: [
+            'real estate market news today sellers',
+            'home selling tips latest news',
+            'real estate commission changes NAR latest',
+            'seller agent representation news',
+            'real estate broker news today',
+            'home prices market update today',
+            'listing agent best practices trending',
+            'real estate seller rights buyer agent',
+            'Santa Clarita Valley real estate market',
+            'dual agency risks real estate',
+        ],
+        subreddits: ['RealEstate', 'realtors', 'FirstTimeHomeBuyer', 'RealEstateAdvice', 'homeowners'],
+        keywords: ['seller', 'listing agent', 'real estate', 'home selling', 'commission', 'dual agency', 'fiduciary', 'broker', 'NAR', 'buyer agent', 'market update', 'home price', 'equity'],
     }
 };
 

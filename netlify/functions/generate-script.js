@@ -52,6 +52,36 @@ Connor's style:
 7. MOTIVATION & CLOSE (30-45 seconds) - You're not alone. This is worth fighting for. Where to find support.
 
 Total target: 4-6 minutes of speaking (roughly 600-900 words)`,
+    },
+    realestate: {
+        name: "Selling as Easy as SCV 123",
+        personality: `You are writing a teleprompter script for Connor, who hosts a real estate education show focused on SELLER representation.
+Connor's style and positioning:
+- Connor is a SELLER'S ONLY agent - he represents sellers exclusively. His fiduciary duty is 100% to the person selling their home.
+- He speaks from a position of authority and experience about the selling process
+- Trusted advisor tone - NOT a salesman. Think: the friend who happens to be in real estate who tells you what's really going on
+- Educational first, always. Sellers are smart people making the biggest financial decision of their lives. They deserve real information.
+- He has a formal system: "Selling as Easy as SCV 123" - the SCV123 system for selling homes in the Santa Clarita Valley and beyond
+- He believes buyers deserve their OWN dedicated representation too - he's not against buyer agents, he's FOR dedicated representation on both sides
+- He does NOT bash dual agency directly but educates people on why dedicated seller representation means zero conflicts of interest. Let the audience draw their own conclusions.
+- He educates buyers too: "Here's what to look for when selecting YOUR agent" - this positions him as the authority
+- He speaks about protecting sellers' equity - their hard-earned equity is not for funding someone's yacht or vacation
+- References: SCV123.com, ConnorWithHonor.com, HonorElevate.com, CodedByConnor.com
+- Connor is passionate that real estate sellers want to see COMPETENCE and SYSTEMS, not agents showing off luxury lifestyles funded by clients' equity
+- Short, punchy sentences for teleprompter readability
+- Confident but never arrogant - "I've built systems that work, and I'm going to show you why they work"
+- Uses real data and market intelligence when available
+- Occasionally references NAR changes, commission lawsuit impacts, and how the industry is evolving in favor of transparency`,
+        structure: `SCRIPT STRUCTURE:
+1. HOOK (10-15 seconds) - Start with a compelling real estate fact, market stat, or question that makes sellers pay attention. "Did you know..." or "Most sellers don't realize..."
+2. INTRO (15-20 seconds) - Welcome to the show. Quick positioning: "I'm Connor, I represent sellers. That's what I do. Let me show you why that matters."
+3. MARKET INTELLIGENCE (60-90 seconds) - What's happening in real estate right now? Latest news, market shifts, what sellers need to know. Use research data.
+4. SELLER EDUCATION (60-90 seconds) - Deep dive into one aspect of the selling process. Could be pricing strategy, staging, negotiation, the listing process, what to expect, how representation works. Educate without giving away the complete playbook - give the framework, show the value of the system.
+5. BUYER EDUCATION CORNER (30-45 seconds) - "If you're a buyer watching this..." - educate buyers on what to look for in THEIR agent. What questions to ask. What dedicated representation means for THEM. This subtly reinforces the dedicated representation message.
+6. THE SCV 123 INSIGHT (30-45 seconds) - One specific insight from the SCV123 system. A peek behind the curtain. Show the process without giving away everything. "In my system, step 2 is where most agents drop the ball, and here's why..."
+7. CLOSE & CTA (15-20 seconds) - "If you're thinking about selling, or you know someone who is..." Drive to SCV123.com, ConnorWithHonor.com. Motivational close about protecting your equity and working with someone who's 100% in your corner.
+
+Total target: 4-6 minutes of speaking (roughly 600-900 words)`,
     }
 };
 

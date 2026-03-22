@@ -40,9 +40,17 @@ const SEARCH_SOURCES = {
             'real estate seller rights buyer agent',
             'Santa Clarita Valley real estate market',
             'dual agency risks real estate',
+            'real estate commission lawsuit update',
+            'Zillow RICO lawsuit real estate',
+            'real estate syndication sites controversy',
+            'flat fee real estate agent news',
+            'seller only agent real estate',
+            'real estate broker commission news site:x.com',
+            'real estate agent commission lawsuit site:substack.com',
+            'NAR settlement buyer agent compensation latest',
         ],
         subreddits: ['RealEstate', 'realtors', 'FirstTimeHomeBuyer', 'RealEstateAdvice', 'homeowners'],
-        keywords: ['seller', 'listing agent', 'real estate', 'home selling', 'commission', 'dual agency', 'fiduciary', 'broker', 'NAR', 'buyer agent', 'market update', 'home price', 'equity'],
+        keywords: ['seller', 'listing agent', 'real estate', 'home selling', 'commission', 'dual agency', 'fiduciary', 'broker', 'NAR', 'buyer agent', 'market update', 'home price', 'equity', 'RICO', 'Zillow', 'flat fee', 'seller representation', 'commission lawsuit'],
     }
 };
 

@@ -1,0 +1,22 @@
+{
+    "name": "Connor's TelePrompter",
+    "short_name": "TelePrompter",
+    "description": "Professional teleprompter with content generation studio",
+    "start_url": "/",
+    "display": "standalone",
+    "orientation": "portrait",
+    "background_color": "#0a0a1a",
+    "theme_color": "#6C5CE7",
+    "icons": [
+        {
+            "src": "icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}

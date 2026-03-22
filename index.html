@@ -2,579 +2,301 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Honor AI Labs | AI-Powered Real Estate Technology</title>
-    <meta name="description" content="Transform your real estate business with AI-powered websites, chatbots, voice assistants, and lead engines. Custom-built technology for modern agents.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="TelePrompter">
+    <title>Connor's TelePrompter</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icon-192.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar" id="navbar">
-        <div class="container nav-container">
-            <a href="#" class="logo">
-                <span class="logo-icon">&#9670;</span>
-                <span class="logo-text">HONOR<span class="logo-accent">AI</span></span>
-            </a>
-            <div class="nav-links" id="navLinks">
-                <a href="#features">Features</a>
-                <a href="#how-it-works">How It Works</a>
-                <a href="#demo">Live Demo</a>
-                <a href="#pricing">Pricing</a>
-                <a href="#contact" class="nav-cta">Get Started</a>
+    <!-- ===================== MAIN MENU SCREEN ===================== -->
+    <div id="menuScreen" class="screen active">
+        <div class="menu-container">
+            <div class="app-logo">
+                <div class="logo-icon-big">
+                    <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="4" y="8" width="56" height="40" rx="4" stroke="currentColor" stroke-width="3"/>
+                        <line x1="16" y1="20" x2="48" y2="20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        <line x1="12" y1="28" x2="52" y2="28" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        <line x1="16" y1="36" x2="48" y2="36" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        <line x1="24" y1="52" x2="40" y2="52" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                        <line x1="32" y1="48" x2="32" y2="56" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <h1>Connor's TelePrompter</h1>
+                <p class="tagline">Record. Generate. Dominate.</p>
             </div>
-            <button class="mobile-menu" id="mobileMenu" aria-label="Toggle menu">
-                <span></span><span></span><span></span>
+
+            <div class="menu-actions">
+                <button class="menu-btn primary-btn" id="btnNewScript">
+                    <span class="btn-icon">+</span>
+                    New Script
+                </button>
+                <button class="menu-btn secondary-btn" id="btnContentStudio">
+                    <span class="btn-icon">&diamondsuit;</span>
+                    Content Studio
+                </button>
+                <button class="menu-btn secondary-btn" id="btnImageStudio">
+                    <span class="btn-icon">&loz;</span>
+                    Thumbnail Studio
+                </button>
+            </div>
+
+            <div class="menu-footer">
+                <div class="brand-links">
+                    <a href="https://codedbyconnor.com" target="_blank">CodedByConnor</a>
+                    <a href="https://connorwithhonor.com" target="_blank">ConnorWithHonor</a>
+                    <a href="https://honorelevate.com" target="_blank">HonorElevate</a>
+                    <a href="https://scv123.com" target="_blank">SCV123</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===================== SCRIPT ENTRY SCREEN ===================== -->
+    <div id="scriptScreen" class="screen">
+        <div class="screen-header">
+            <button class="back-btn" data-target="menuScreen">&larr;</button>
+            <h2>Enter Your Script</h2>
+            <button class="action-btn" id="btnStartTeleprompter">GO</button>
+        </div>
+        <div class="script-entry">
+            <textarea id="scriptText" placeholder="Paste or type your script here...&#10;&#10;Tip: The text will scroll smoothly on the teleprompter screen with your camera feed visible behind it."></textarea>
+            <div class="script-tools">
+                <div class="speed-control">
+                    <label>Scroll Speed</label>
+                    <input type="range" id="speedSlider" min="0.5" max="8" step="0.5" value="2.5">
+                    <span id="speedValue">2.5</span>
+                </div>
+                <div class="font-control">
+                    <label>Font Size</label>
+                    <input type="range" id="fontSlider" min="18" max="72" step="2" value="36">
+                    <span id="fontValue">36px</span>
+                </div>
+                <div class="mirror-control">
+                    <label>
+                        <input type="checkbox" id="mirrorToggle">
+                        Mirror Text (for beam splitter)
+                    </label>
+                </div>
+                <div class="camera-control">
+                    <label>
+                        <input type="checkbox" id="cameraToggle" checked>
+                        Show Camera Behind Text
+                    </label>
+                </div>
+                <div class="opacity-control">
+                    <label>Text Opacity</label>
+                    <input type="range" id="opacitySlider" min="0.3" max="1" step="0.05" value="0.85">
+                    <span id="opacityValue">85%</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===================== TELEPROMPTER SCREEN ===================== -->
+    <div id="teleprompterScreen" class="screen">
+        <!-- Camera feed behind text -->
+        <video id="cameraFeed" autoplay playsinline muted></video>
+        <div class="camera-overlay"></div>
+
+        <!-- Scrolling text area -->
+        <div id="prompterArea" class="prompter-area">
+            <div id="prompterContent" class="prompter-content">
+                <!-- Script text will be injected here -->
+            </div>
+        </div>
+
+        <!-- Guide line - center of screen -->
+        <div class="guide-line"></div>
+
+        <!-- Countdown overlay -->
+        <div id="countdownOverlay" class="countdown-overlay">
+            <div id="countdownNumber" class="countdown-number">3</div>
+        </div>
+
+        <!-- Status indicators -->
+        <div class="prompter-status">
+            <div id="statusPaused" class="status-badge paused" style="display:none;">PAUSED - Release to Resume</div>
+            <div id="statusScrolling" class="status-badge scrolling" style="display:none;">SCROLLING</div>
+        </div>
+
+        <!-- Control bar (tap to show/hide) -->
+        <div id="controlBar" class="control-bar">
+            <button class="ctrl-btn" id="btnRestart" title="Restart">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 4v6h6M23 20v-6h-6"/><path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"/></svg>
+            </button>
+            <button class="ctrl-btn" id="btnSlower" title="Slower">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </button>
+            <div class="speed-display" id="liveSpeed">2.5x</div>
+            <button class="ctrl-btn" id="btnFaster" title="Faster">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </button>
+            <button class="ctrl-btn" id="btnExit" title="Exit">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
             </button>
         </div>
-    </nav>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-bg">
-            <div class="hero-gradient"></div>
-            <div class="hero-particles" id="particles"></div>
+        <!-- Progress bar -->
+        <div class="progress-bar">
+            <div id="progressFill" class="progress-fill"></div>
         </div>
-        <div class="container hero-content">
-            <div class="hero-badge">
-                <span class="badge-dot"></span>
-                AI-Powered Real Estate Technology
-            </div>
-            <h1 class="hero-title">
-                Your Listings Deserve<br>
-                <span class="gradient-text">Intelligent Technology</span>
-            </h1>
-            <p class="hero-subtitle">
-                Custom AI website, voice assistant, chatbot, and lead engine &mdash;
-                built exclusively for your brand. Everything a modern agent needs to
-                dominate their market, powered by cutting-edge artificial intelligence.
-            </p>
-            <div class="hero-ctas">
-                <a href="#contact" class="btn btn-primary btn-lg">
-                    <span>Start Your Free Consultation</span>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                </a>
-                <a href="#demo" class="btn btn-ghost btn-lg">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                    <span>See It In Action</span>
-                </a>
-            </div>
-            <div class="hero-stats">
-                <div class="stat">
-                    <span class="stat-number" data-count="47">0</span><span class="stat-suffix">%</span>
-                    <span class="stat-label">More Leads Captured</span>
-                </div>
-                <div class="stat-divider"></div>
-                <div class="stat">
-                    <span class="stat-number" data-count="24">0</span><span class="stat-suffix">/7</span>
-                    <span class="stat-label">AI Availability</span>
-                </div>
-                <div class="stat-divider"></div>
-                <div class="stat">
-                    <span class="stat-number" data-count="3">0</span><span class="stat-suffix">x</span>
-                    <span class="stat-label">Faster Response Time</span>
-                </div>
-            </div>
-        </div>
-        <div class="hero-scroll">
-            <div class="scroll-indicator">
-                <span>Scroll to explore</span>
-                <div class="scroll-line"></div>
-            </div>
-        </div>
-    </section>
+    </div>
 
-    <!-- Social Proof Bar -->
-    <section class="social-proof">
-        <div class="container">
-            <p class="proof-label">Trusted by agents powered by</p>
-            <div class="proof-logos">
-                <span class="proof-logo">Honor Elevate</span>
-                <span class="proof-logo">ViveCoding</span>
-                <span class="proof-logo">SyncTech</span>
-                <span class="proof-logo">Honor AI Labs</span>
-                <span class="proof-logo">ConnorWithHonor</span>
-            </div>
+    <!-- ===================== CONTENT STUDIO SCREEN ===================== -->
+    <div id="contentScreen" class="screen">
+        <div class="screen-header">
+            <button class="back-btn" data-target="menuScreen">&larr;</button>
+            <h2>Content Studio</h2>
+            <div></div>
         </div>
-    </section>
+        <div class="content-studio">
+            <!-- Step 1: Script Input -->
+            <div class="studio-section">
+                <h3>1. Your Script / Transcript</h3>
+                <textarea id="contentScript" placeholder="Paste the script you just recorded from, or paste a transcript..."></textarea>
+                <button class="menu-btn primary-btn" id="btnUsePrompterScript">Use Teleprompter Script</button>
+            </div>
 
-    <!-- Problem/Solution Section -->
-    <section class="problem-section">
-        <div class="container">
-            <div class="problem-grid">
-                <div class="problem-card">
-                    <div class="problem-icon">&#10007;</div>
-                    <h3>The Old Way</h3>
-                    <ul class="problem-list">
-                        <li>Generic template websites that look like everyone else's</li>
-                        <li>Leads slip through the cracks while you sleep</li>
-                        <li>Hours wasted on repetitive client questions</li>
-                        <li>No follow-up system &mdash; contacts go cold</li>
-                        <li>Paying $500+/mo for tools that don't talk to each other</li>
-                    </ul>
-                </div>
-                <div class="solution-card">
-                    <div class="solution-icon">&#10003;</div>
-                    <h3>The Honor AI Way</h3>
-                    <ul class="solution-list">
-                        <li>Stunning custom site built around YOUR brand</li>
-                        <li>AI chatbot captures & qualifies leads 24/7</li>
-                        <li>Voice AI answers calls and books appointments</li>
-                        <li>Automated follow-up sequences that convert</li>
-                        <li>One integrated platform for $299/mo &mdash; everything included</li>
-                    </ul>
-                </div>
+            <!-- Step 2: YouTube URL (optional) -->
+            <div class="studio-section">
+                <h3>2. YouTube Video URL (after upload)</h3>
+                <input type="text" id="youtubeUrl" placeholder="https://youtube.com/watch?v=..." class="text-input">
             </div>
-        </div>
-    </section>
 
-    <!-- Features Section -->
-    <section class="features" id="features">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-tag">The Complete Package</span>
-                <h2 class="section-title">Everything You Need.<br><span class="gradient-text">Nothing You Don't.</span></h2>
-                <p class="section-subtitle">One platform. One price. Zero headaches. Every feature is custom-built for real estate professionals.</p>
-            </div>
-            <div class="features-grid">
-                <div class="feature-card feature-highlight">
-                    <div class="feature-icon">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
-                    </div>
-                    <h3>Custom AI Website</h3>
-                    <p>A gorgeous, mobile-optimized website that reflects your unique brand. Not a template &mdash; a custom-designed experience that converts visitors into clients.</p>
-                    <div class="feature-tags">
-                        <span>Custom Design</span>
-                        <span>Mobile-First</span>
-                        <span>SEO Optimized</span>
-                    </div>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
-                    </div>
-                    <h3>AI Chatbot</h3>
-                    <p>Intelligent conversation that qualifies leads, answers property questions, and books showings &mdash; even at 2 AM.</p>
-                    <div class="feature-tags">
-                        <span>24/7 Active</span>
-                        <span>Lead Qualifying</span>
-                    </div>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
-                    </div>
-                    <h3>AI Voice Assistant</h3>
-                    <p>A custom voice agent that answers calls, provides property info, schedules appointments, and never puts a client on hold.</p>
-                    <div class="feature-tags">
-                        <span>Custom Voice</span>
-                        <span>Call Routing</span>
-                    </div>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
-                    </div>
-                    <h3>Lead & Contact Engine</h3>
-                    <p>Every form submission, chat interaction, and call becomes a contact. Import your existing database. Never lose a lead again.</p>
-                    <div class="feature-tags">
-                        <span>Auto-Capture</span>
-                        <span>CRM Integration</span>
-                    </div>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-                    </div>
-                    <h3>Smart Calendar</h3>
-                    <p>Syncs with your calendar so prospects can book showings and consultations instantly. Automatic reminders reduce no-shows.</p>
-                    <div class="feature-tags">
-                        <span>Auto-Booking</span>
-                        <span>Reminders</span>
-                    </div>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-                    </div>
-                    <h3>Your Domain, Your Brand</h3>
-                    <p>We attach your custom domain, set up your branding, colors, and logo. It's YOUR site &mdash; we just make it extraordinary.</p>
-                    <div class="feature-tags">
-                        <span>Custom Domain</span>
-                        <span>SSL Included</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- How It Works -->
-    <section class="how-it-works" id="how-it-works">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-tag">Simple Process</span>
-                <h2 class="section-title">Up and Running<br><span class="gradient-text">In Days, Not Months</span></h2>
-            </div>
-            <div class="steps-grid">
-                <div class="step-card">
-                    <div class="step-number">01</div>
-                    <h3>Discovery Call</h3>
-                    <p>We learn about your brand, market, and goals. 30 minutes is all it takes to map out your custom AI strategy.</p>
-                </div>
-                <div class="step-connector">
-                    <svg width="40" height="2" viewBox="0 0 40 2"><line x1="0" y1="1" x2="40" y2="1" stroke="currentColor" stroke-width="2" stroke-dasharray="4 4"/></svg>
-                </div>
-                <div class="step-card">
-                    <div class="step-number">02</div>
-                    <h3>We Build Everything</h3>
-                    <p>Custom website, AI chatbot training, voice assistant setup, lead engine configuration &mdash; all done for you.</p>
-                </div>
-                <div class="step-connector">
-                    <svg width="40" height="2" viewBox="0 0 40 2"><line x1="0" y1="1" x2="40" y2="1" stroke="currentColor" stroke-width="2" stroke-dasharray="4 4"/></svg>
-                </div>
-                <div class="step-card">
-                    <div class="step-number">03</div>
-                    <h3>Launch & Dominate</h3>
-                    <p>Your AI-powered platform goes live. We connect your domain, and you start capturing leads on autopilot.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Demo Section -->
-    <section class="demo-section" id="demo">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-tag">See It Live</span>
-                <h2 class="section-title">Experience the<br><span class="gradient-text">AI Difference</span></h2>
-                <p class="section-subtitle">Try the chatbot right here. Ask it about listings, schedule a showing, or see how it handles tough questions.</p>
-            </div>
-            <div class="demo-container">
-                <div class="demo-browser">
-                    <div class="browser-bar">
-                        <div class="browser-dots">
-                            <span></span><span></span><span></span>
-                        </div>
-                        <div class="browser-url">yourname.honorelevate.com</div>
-                    </div>
-                    <div class="demo-content">
-                        <div class="demo-site-preview">
-                            <div class="demo-hero-mock">
-                                <h3>Sarah Chen Realty</h3>
-                                <p>Find your dream home in the Bay Area</p>
-                                <div class="demo-search-bar">
-                                    <span>Search by neighborhood, zip, or address...</span>
-                                </div>
-                            </div>
-                            <div class="demo-features-mock">
-                                <div class="demo-feature-card"><span>Featured Listings</span></div>
-                                <div class="demo-feature-card"><span>Market Reports</span></div>
-                                <div class="demo-feature-card"><span>Home Valuation</span></div>
-                            </div>
-                        </div>
-                        <!-- Chat Widget Demo -->
-                        <div class="chat-widget" id="chatWidget">
-                            <div class="chat-header">
-                                <div class="chat-avatar">
-                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a4 4 0 014 4v2a4 4 0 01-8 0V6a4 4 0 014-4z"/><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/></svg>
-                                </div>
-                                <div>
-                                    <span class="chat-name">Sarah's AI Assistant</span>
-                                    <span class="chat-status"><span class="status-dot"></span> Online</span>
-                                </div>
-                            </div>
-                            <div class="chat-messages" id="chatMessages">
-                                <div class="chat-message bot">
-                                    <p>Hi! I'm Sarah's AI assistant. I can help you find properties, schedule showings, or answer any real estate questions. What are you looking for today?</p>
-                                </div>
-                            </div>
-                            <div class="chat-input-area">
-                                <input type="text" id="chatInput" placeholder="Ask about listings, schedule a showing..." autocomplete="off">
-                                <button id="chatSend" aria-label="Send message">
-                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Testimonials -->
-    <section class="testimonials">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-tag">Results That Speak</span>
-                <h2 class="section-title">What Agents Are<br><span class="gradient-text">Saying About Us</span></h2>
-            </div>
-            <div class="testimonials-grid">
-                <div class="testimonial-card">
-                    <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-                    <p class="testimonial-text">"I was skeptical about AI, but within the first week my chatbot captured 12 leads while I was at closings. The voice assistant is incredible &mdash; clients think they're talking to a real person."</p>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">MR</div>
-                        <div>
-                            <span class="author-name">Marcus Rodriguez</span>
-                            <span class="author-title">Luxury Home Specialist, Miami</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-card featured">
-                    <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-                    <p class="testimonial-text">"This replaced my $800/month tech stack. Website, CRM, chatbot, voice &mdash; all in one place for $299. The ROI is unreal. Connor and his team are the real deal."</p>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">JP</div>
-                        <div>
-                            <span class="author-name">Jennifer Park</span>
-                            <span class="author-title">Team Lead, Park Realty Group</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-card">
-                    <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-                    <p class="testimonial-text">"My site looks better than agents spending $5K+ on web design. The AI chatbot books showings for me while I'm out with other clients. It's like having a full-time assistant."</p>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">DT</div>
-                        <div>
-                            <span class="author-name">David Thompson</span>
-                            <span class="author-title">Independent Agent, Austin</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Pricing Section -->
-    <section class="pricing" id="pricing">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-tag">Simple Pricing</span>
-                <h2 class="section-title">One Plan.<br><span class="gradient-text">Everything Included.</span></h2>
-                <p class="section-subtitle">No hidden fees. No surprise charges. No nickel-and-diming. Just results.</p>
-            </div>
-            <div class="pricing-card">
-                <div class="pricing-badge">Most Popular</div>
-                <div class="pricing-header">
-                    <h3>AI Agent Pro</h3>
-                    <div class="pricing-amount">
-                        <span class="price-currency">$</span>
-                        <span class="price-number">299</span>
-                        <span class="price-period">/month</span>
-                    </div>
-                    <p class="pricing-note">Setup fee waived for agents who start before May 2026</p>
-                </div>
-                <div class="pricing-features">
-                    <div class="pricing-column">
-                        <h4>Website & Design</h4>
-                        <ul>
-                            <li><span class="check">&#10003;</span> Custom-designed AI website</li>
-                            <li><span class="check">&#10003;</span> Mobile-optimized responsive design</li>
-                            <li><span class="check">&#10003;</span> Your custom domain connected</li>
-                            <li><span class="check">&#10003;</span> SSL security certificate</li>
-                            <li><span class="check">&#10003;</span> SEO optimization</li>
-                        </ul>
-                    </div>
-                    <div class="pricing-column">
-                        <h4>AI Technology</h4>
-                        <ul>
-                            <li><span class="check">&#10003;</span> AI chatbot (trained on your data)</li>
-                            <li><span class="check">&#10003;</span> Custom AI voice assistant</li>
-                            <li><span class="check">&#10003;</span> Lead capture & contact engine</li>
-                            <li><span class="check">&#10003;</span> Calendar booking system</li>
-                            <li><span class="check">&#10003;</span> Automated follow-up sequences</li>
-                        </ul>
-                    </div>
-                    <div class="pricing-column">
-                        <h4>Support & Growth</h4>
-                        <ul>
-                            <li><span class="check">&#10003;</span> Priority support</li>
-                            <li><span class="check">&#10003;</span> Monthly performance reports</li>
-                            <li><span class="check">&#10003;</span> Ongoing updates & improvements</li>
-                            <li><span class="check">&#10003;</span> Contact database management</li>
-                            <li><span class="check">&#10003;</span> Training & onboarding</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="pricing-cta">
-                    <a href="#contact" class="btn btn-primary btn-lg btn-full">
-                        <span>Claim Your Spot &mdash; Setup Fee Waived</span>
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                    </a>
-                    <p class="pricing-guarantee">30-day money-back guarantee. Cancel anytime. No contracts.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- FAQ Section -->
-    <section class="faq">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-tag">Questions?</span>
-                <h2 class="section-title">Frequently<br><span class="gradient-text">Asked Questions</span></h2>
-            </div>
-            <div class="faq-grid">
-                <div class="faq-item">
-                    <button class="faq-question" aria-expanded="false">
-                        <span>How long does setup take?</span>
-                        <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            <!-- Step 3: Generate Content -->
+            <div class="studio-section">
+                <h3>3. Generate Content</h3>
+                <div class="generate-grid">
+                    <button class="gen-btn" data-type="youtube-title">
+                        <span class="gen-icon">&#9658;</span>
+                        YouTube Title
                     </button>
-                    <div class="faq-answer">
-                        <p>Most agents are fully launched within 5-7 business days. We handle everything &mdash; you just provide your branding info and do a quick approval before we go live.</p>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <button class="faq-question" aria-expanded="false">
-                        <span>Can I use my existing domain?</span>
-                        <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                    <button class="gen-btn" data-type="youtube-desc">
+                        <span class="gen-icon">&#9658;</span>
+                        YouTube Description
                     </button>
-                    <div class="faq-answer">
-                        <p>Absolutely. We'll connect your existing domain or help you get a new one. Either way, it's your domain, your brand &mdash; we just power it with AI.</p>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <button class="faq-question" aria-expanded="false">
-                        <span>What does the AI chatbot actually do?</span>
-                        <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                    <button class="gen-btn" data-type="youtube-hashtags">
+                        <span class="gen-icon">#</span>
+                        YouTube Hashtags
                     </button>
-                    <div class="faq-answer">
-                        <p>It engages visitors 24/7, answers common questions about your listings and services, qualifies leads by asking the right questions, and captures contact info. It can even book showings directly through your calendar integration.</p>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <button class="faq-question" aria-expanded="false">
-                        <span>How is the AI voice system different from a voicemail?</span>
-                        <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                    <button class="gen-btn" data-type="instagram">
+                        <span class="gen-icon">&#9632;</span>
+                        Instagram Post
                     </button>
-                    <div class="faq-answer">
-                        <p>Night and day. The AI voice assistant has a natural conversation with callers. It can answer questions about your listings, provide market info, schedule appointments, and even transfer calls to you when needed. Clients won't know it's AI.</p>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <button class="faq-question" aria-expanded="false">
-                        <span>Is there a contract or commitment?</span>
-                        <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                    <button class="gen-btn" data-type="facebook">
+                        <span class="gen-icon">f</span>
+                        Facebook Post
                     </button>
-                    <div class="faq-answer">
-                        <p>No long-term contracts. Month-to-month billing. You can cancel anytime with 30 days notice. We're confident you'll stay because of the results, not because of a contract.</p>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <button class="faq-question" aria-expanded="false">
-                        <span>Why is the setup fee waived right now?</span>
-                        <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                    <button class="gen-btn" data-type="linkedin">
+                        <span class="gen-icon">in</span>
+                        LinkedIn Post
                     </button>
-                    <div class="faq-answer">
-                        <p>We're building our portfolio of real estate agent success stories. Agents who join before May 2026 get the full custom setup (normally a one-time fee) completely waived. It's a limited-time offer for early adopters.</p>
-                    </div>
+                    <button class="gen-btn" data-type="twitter">
+                        <span class="gen-icon">X</span>
+                        X/Twitter Post
+                    </button>
+                    <button class="gen-btn" data-type="tiktok">
+                        <span class="gen-icon">&#9835;</span>
+                        TikTok Caption
+                    </button>
+                    <button class="gen-btn" data-type="all">
+                        <span class="gen-icon">&starf;</span>
+                        Generate ALL
+                    </button>
                 </div>
             </div>
-        </div>
-    </section>
 
-    <!-- Contact / CTA Section -->
-    <section class="contact-section" id="contact">
-        <div class="container">
-            <div class="contact-grid">
-                <div class="contact-info">
-                    <span class="section-tag">Let's Talk</span>
-                    <h2 class="section-title">Ready to<br><span class="gradient-text">Stand Out?</span></h2>
-                    <p>Book your free consultation and see exactly how we'll build your AI-powered real estate platform. No pressure. No obligation. Just a conversation about what's possible.</p>
-                    <div class="contact-highlights">
-                        <div class="highlight">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                            <span>Free 30-minute strategy session</span>
+            <!-- Output Area -->
+            <div class="studio-section" id="outputSection" style="display:none;">
+                <h3>Generated Content</h3>
+                <div id="contentOutput" class="content-output"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===================== THUMBNAIL STUDIO SCREEN ===================== -->
+    <div id="imageScreen" class="screen">
+        <div class="screen-header">
+            <button class="back-btn" data-target="menuScreen">&larr;</button>
+            <h2>Thumbnail Studio</h2>
+            <div></div>
+        </div>
+        <div class="image-studio">
+            <div class="studio-section">
+                <h3>Upload Your Photo</h3>
+                <div class="upload-zone" id="uploadZone">
+                    <input type="file" id="imageUpload" accept="image/*" hidden>
+                    <div class="upload-placeholder" id="uploadPlaceholder">
+                        <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" width="48" height="48">
+                            <rect x="4" y="8" width="40" height="32" rx="4"/>
+                            <circle cx="16" cy="20" r="4"/>
+                            <path d="M4 32l12-10 8 8 8-6 12 10"/>
+                        </svg>
+                        <p>Tap to upload your photo</p>
+                    </div>
+                    <img id="uploadedImage" class="uploaded-image" style="display:none;">
+                </div>
+            </div>
+
+            <div class="studio-section">
+                <h3>Topic / Title</h3>
+                <input type="text" id="thumbTitle" placeholder="What's the video about?" class="text-input">
+                <button class="menu-btn primary-btn" id="btnUseTitleFromScript">Pull from Script</button>
+            </div>
+
+            <div class="studio-section">
+                <h3>Generate Thumbnail Sizes</h3>
+                <p class="helper-text">Mr. Beast Protocol: Bold text, expressive face, high contrast, bright colors, minimal clutter.</p>
+                <div class="thumb-grid">
+                    <div class="thumb-card">
+                        <div class="thumb-preview" id="ytThumb" data-ratio="16:9">
+                            <canvas id="canvasYT" width="1280" height="720"></canvas>
                         </div>
-                        <div class="highlight">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                            <span>See a live demo of your AI assistant</span>
+                        <div class="thumb-info">
+                            <strong>YouTube</strong> - 1280 x 720 (16:9)
+                            <button class="download-btn" data-canvas="canvasYT" data-name="youtube-thumbnail">Download</button>
                         </div>
-                        <div class="highlight">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                            <span>Get a custom mockup of your site</span>
+                    </div>
+                    <div class="thumb-card">
+                        <div class="thumb-preview" id="fbThumb" data-ratio="851:315">
+                            <canvas id="canvasFB" width="851" height="315"></canvas>
+                        </div>
+                        <div class="thumb-info">
+                            <strong>Facebook</strong> - 851 x 315
+                            <button class="download-btn" data-canvas="canvasFB" data-name="facebook-cover">Download</button>
+                        </div>
+                    </div>
+                    <div class="thumb-card">
+                        <div class="thumb-preview" id="igThumb" data-ratio="1:1">
+                            <canvas id="canvasIG" width="1080" height="1080"></canvas>
+                        </div>
+                        <div class="thumb-info">
+                            <strong>Instagram</strong> - 1080 x 1080 (1:1)
+                            <button class="download-btn" data-canvas="canvasIG" data-name="instagram-square">Download</button>
                         </div>
                     </div>
                 </div>
-                <div class="contact-form-wrapper">
-                    <form class="contact-form" id="contactForm" name="leads" method="POST" data-netlify="true" netlify-honeypot="bot-field">
-                        <input type="hidden" name="form-name" value="leads">
-                        <p class="hidden" style="display:none"><label>Don't fill this out: <input name="bot-field"></label></p>
-                        <div class="form-group">
-                            <label for="name">Full Name</label>
-                            <input type="text" id="name" name="name" placeholder="Your name" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" id="email" name="email" placeholder="your@email.com" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="phone">Phone</label>
-                            <input type="tel" id="phone" name="phone" placeholder="(555) 123-4567">
-                        </div>
-                        <div class="form-group">
-                            <label for="brokerage">Brokerage / Company</label>
-                            <input type="text" id="brokerage" name="brokerage" placeholder="Your brokerage name">
-                        </div>
-                        <div class="form-group">
-                            <label for="market">Your Market Area</label>
-                            <input type="text" id="market" name="market" placeholder="e.g., Miami, Austin, San Diego">
-                        </div>
-                        <div class="form-group full-width">
-                            <label for="message">What are you looking for?</label>
-                            <textarea id="message" name="message" rows="3" placeholder="Tell us about your goals..."></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary btn-lg btn-full">
-                            <span>Book My Free Consultation</span>
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                        </button>
-                        <p class="form-disclaimer">We'll respond within 2 hours during business hours. Your info is safe with us.</p>
-                    </form>
-                </div>
+                <button class="menu-btn primary-btn" id="btnGenerateThumbs">Generate Thumbnails</button>
             </div>
-        </div>
-    </section>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-brand">
-                    <a href="#" class="logo">
-                        <span class="logo-icon">&#9670;</span>
-                        <span class="logo-text">HONOR<span class="logo-accent">AI</span></span>
-                    </a>
-                    <p>AI-powered technology solutions built for modern real estate professionals. Part of the Honor Elevate & ViveCoding ecosystem.</p>
+            <div class="studio-section">
+                <h3>AI Thumbnail Prompt</h3>
+                <p class="helper-text">Copy this prompt into an AI image tool (Midjourney, DALL-E, etc.) for a professional thumbnail:</p>
+                <div id="aiPromptOutput" class="content-output-box">
+                    <p class="placeholder-text">Generate thumbnails above to get your AI prompt</p>
                 </div>
-                <div class="footer-links">
-                    <h4>Product</h4>
-                    <a href="#features">Features</a>
-                    <a href="#pricing">Pricing</a>
-                    <a href="#demo">Live Demo</a>
-                    <a href="#faq">FAQ</a>
-                </div>
-                <div class="footer-links">
-                    <h4>Company</h4>
-                    <a href="https://honorailabs.com">Honor AI Labs</a>
-                    <a href="https://connorwithhonor.com">ConnorWithHonor</a>
-                    <a href="https://realestate.honorailabs.com">Real Estate Demo</a>
-                </div>
-                <div class="footer-links">
-                    <h4>Get Started</h4>
-                    <a href="#contact">Book Consultation</a>
-                    <a href="#pricing">View Pricing</a>
-                    <a href="mailto:connor@honorailabs.com">Email Us</a>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2026 Honor AI Labs. All rights reserved.</p>
-                <p>Built with AI by <a href="https://connorwithhonor.com">ConnorWithHonor</a></p>
+                <button class="copy-btn" id="btnCopyAiPrompt" style="display:none;">Copy AI Prompt</button>
             </div>
         </div>
-    </footer>
+    </div>
 
     <script src="script.js"></script>
 </body>

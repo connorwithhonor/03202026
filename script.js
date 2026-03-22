@@ -25,6 +25,9 @@
         scrollAtTouchStart: 0,
         uploadedImageData: null,
         youtubeUrl: '',
+        currentShowType: null,
+        lastResearch: null,
+        lastGeneratedScript: '',
     };
 
     // Connor's properties for content generation
@@ -79,6 +82,24 @@
     $('btnNewScript').addEventListener('click', () => showScreen('scriptScreen'));
     $('btnContentStudio').addEventListener('click', () => showScreen('contentScreen'));
     $('btnImageStudio').addEventListener('click', () => showScreen('imageScreen'));
+
+    $('btnAIShow').addEventListener('click', () => {
+        state.currentShowType = 'ai';
+        $('showGenTitle').textContent = 'AI Show Generator';
+        $('showGenSubtitle').textContent = "Today's AI Show";
+        $('showGenDesc').textContent = 'Scans the last 24 hours of top-performing AI content from YouTube, Reddit, X, and news sources. Assembles a complete teleprompter script in your voice.';
+        resetShowGenerator();
+        showScreen('showGenScreen');
+    });
+
+    $('btnFatShow').addEventListener('click', () => {
+        state.currentShowType = 'fat';
+        $('showGenTitle').textContent = 'Last Addiction Show';
+        $('showGenSubtitle').textContent = "Today's Last Addiction Show";
+        $('showGenDesc').textContent = 'Scans the last 24-72 hours for top content on food addiction, fasting, weightlifting, muscle over 50, and recovery. Builds your show script with heart and science.';
+        resetShowGenerator();
+        showScreen('showGenScreen');
+    });
 
     // ==========================================
     // SCRIPT ENTRY CONTROLS
@@ -876,6 +897,253 @@ Style: Professional, eye-catching, high CTR thumbnail`;
             link.click();
         });
     });
+
+    // ==========================================
+    // SHOW GENERATOR ENGINE
+    // ==========================================
+
+    function resetShowGenerator() {
+        $('showGenStatus').style.display = 'none';
+        $('showGenOptions').style.display = 'block';
+        $('showResearchPreview').style.display = 'none';
+        $('showScriptResult').style.display = 'none';
+        $('showContentResult').style.display = 'none';
+        $('showCustomNotes').value = '';
+        ['step1','step2','step3','step4'].forEach(id => {
+            $(id).className = 'step';
+        });
+    }
+
+    function setStep(stepNum, status) {
+        const stepEl = $('step' + stepNum);
+        if (stepEl) stepEl.className = 'step ' + status;
+    }
+
+    $('btnGenerateShow').addEventListener('click', async () => {
+        const showType = state.currentShowType;
+        const customNotes = $('showCustomNotes').value.trim();
+        const lookback = document.querySelector('input[name="lookback"]:checked')?.value || '24';
+
+        // Show progress
+        $('showGenOptions').style.display = 'none';
+        $('showGenStatus').style.display = 'block';
+        $('showSpinner').className = 'status-spinner';
+
+        try {
+            // STEP 1: Research
+            setStep(1, 'active');
+            $('showStatusText').textContent = 'Scanning trending content across the web...';
+
+            let research = { webResults: [], redditResults: [] };
+            try {
+                const resResponse = await fetch('/api/research', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ showType, lookbackHours: parseInt(lookback) }),
+                });
+
+                if (resResponse.ok) {
+                    research = await resResponse.json();
+                }
+            } catch (err) {
+                console.warn('Research API not available, using fallback:', err.message);
+            }
+
+            state.lastResearch = research;
+            setStep(1, 'complete');
+
+            // Show research preview
+            if (research.webResults.length || research.redditResults.length) {
+                $('showResearchPreview').style.display = 'block';
+                const summaryParts = [];
+                if (research.webResults.length) {
+                    summaryParts.push(`Found ${research.webResults.length} trending articles/videos`);
+                    research.webResults.slice(0, 5).forEach(r => {
+                        summaryParts.push(`  - ${r.title} (${r.source})`);
+                    });
+                }
+                if (research.redditResults.length) {
+                    summaryParts.push(`\nFound ${research.redditResults.length} hot Reddit discussions`);
+                    research.redditResults.slice(0, 5).forEach(r => {
+                        summaryParts.push(`  - [r/${r.subreddit}] ${r.title} (${r.score} upvotes)`);
+                    });
+                }
+                $('researchSummary').textContent = summaryParts.join('\n');
+            }
+
+            // STEP 2: Analyze
+            setStep(2, 'active');
+            $('showStatusText').textContent = 'Analyzing content and finding the best stories...';
+            await sleep(500);
+            setStep(2, 'complete');
+
+            // STEP 3: Generate Script
+            setStep(3, 'active');
+            $('showStatusText').textContent = 'Writing your show script with Claude AI...';
+
+            const scriptResponse = await fetch('/api/generate-script', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    showType,
+                    research,
+                    emailContext: '',
+                    customNotes,
+                }),
+            });
+
+            if (!scriptResponse.ok) {
+                const errData = await scriptResponse.json();
+                throw new Error(errData.error || 'Script generation failed');
+            }
+
+            const scriptData = await scriptResponse.json();
+            state.lastGeneratedScript = scriptData.script;
+            setStep(3, 'complete');
+
+            // STEP 4: Done
+            setStep(4, 'complete');
+            $('showStatusText').textContent = 'Your show is ready!';
+            $('showSpinner').className = 'status-spinner done';
+
+            // Show the script
+            $('generatedScript').value = scriptData.script;
+            $('generatedScript').readOnly = true;
+            $('showScriptResult').style.display = 'block';
+            $('showScriptResult').scrollIntoView({ behavior: 'smooth' });
+
+        } catch (err) {
+            $('showStatusText').textContent = 'Error: ' + err.message;
+            $('showSpinner').className = 'status-spinner done';
+            $('showSpinner').style.borderColor = 'var(--danger)';
+
+            // If the API isn't set up yet, show setup instructions
+            if (err.message.includes('ANTHROPIC_API_KEY') || err.message.includes('Failed to fetch')) {
+                $('showStatusText').innerHTML = `
+                    <strong>Setup Required</strong><br><br>
+                    To use AI script generation, add these environment variables in your Netlify dashboard:<br><br>
+                    <code>ANTHROPIC_API_KEY</code> - Your Claude API key<br>
+                    <code>BRAVE_SEARCH_API_KEY</code> - Free at brave.com/search/api (optional but recommended)<br><br>
+                    Netlify Dashboard &rarr; Site Settings &rarr; Environment Variables
+                `;
+            }
+
+            // Show the options again so they can retry
+            setTimeout(() => {
+                $('showGenOptions').style.display = 'block';
+            }, 2000);
+        }
+    });
+
+    // Send script to teleprompter
+    $('btnSendToTeleprompter').addEventListener('click', () => {
+        const script = $('generatedScript').value;
+        if (script) {
+            $('scriptText').value = script;
+            showScreen('scriptScreen');
+        }
+    });
+
+    // Edit script (toggle readonly)
+    $('btnEditScript').addEventListener('click', () => {
+        const textarea = $('generatedScript');
+        textarea.readOnly = !textarea.readOnly;
+        $('btnEditScript').querySelector('.btn-icon').textContent = textarea.readOnly ? '\u2026' : '\u2713';
+        $('btnEditScript').querySelector('.btn-icon').nextSibling.textContent = textarea.readOnly ? ' Edit Script' : ' Done Editing';
+        if (!textarea.readOnly) textarea.focus();
+    });
+
+    // Copy script
+    $('btnCopyScript').addEventListener('click', () => {
+        navigator.clipboard.writeText($('generatedScript').value).then(() => {
+            const btn = $('btnCopyScript');
+            const original = btn.innerHTML;
+            btn.innerHTML = '<span class="btn-icon">&check;</span> Copied!';
+            setTimeout(() => btn.innerHTML = original, 1500);
+        });
+    });
+
+    // Generate all social content via AI
+    $('btnGenerateAllContent').addEventListener('click', async () => {
+        const script = $('generatedScript').value;
+        if (!script) return;
+
+        const btn = $('btnGenerateAllContent');
+        btn.disabled = true;
+        btn.innerHTML = '<span class="btn-icon">&starf;</span> Generating...';
+
+        try {
+            const response = await fetch('/api/generate-content', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    script,
+                    youtubeUrl: $('youtubeUrl')?.value || '',
+                    showType: state.currentShowType,
+                }),
+            });
+
+            if (!response.ok) {
+                const errData = await response.json();
+                throw new Error(errData.error || 'Content generation failed');
+            }
+
+            const data = await response.json();
+            const content = data.content;
+
+            // Display all generated content
+            const output = $('aiContentOutput');
+            output.innerHTML = '';
+
+            const contentMap = {
+                'YouTube Title': content.youtubeTitle,
+                'YouTube Title Alternatives': content.youtubeTitleAlts,
+                'YouTube Description': content.youtubeDescription,
+                'YouTube Hashtags': content.youtubeHashtags,
+                'Instagram Caption': content.instagramCaption,
+                'Facebook Post': content.facebookPost,
+                'LinkedIn Post': content.linkedinPost,
+                'X/Twitter Post': content.twitterPost,
+                'X/Twitter Thread': content.twitterThread,
+                'TikTok Caption': content.tiktokCaption,
+                'Email Newsletter': content.emailNewsletter,
+            };
+
+            Object.entries(contentMap).forEach(([label, text]) => {
+                if (!text) return;
+                const card = document.createElement('div');
+                card.className = 'output-card';
+                card.innerHTML = `
+                    <div class="output-card-header">
+                        <h4>${label}</h4>
+                        <button class="copy-small-btn" data-copy>Copy</button>
+                    </div>
+                    <div class="output-card-body">${escapeHtml(text)}</div>
+                `;
+                card.querySelector('[data-copy]').addEventListener('click', () => {
+                    navigator.clipboard.writeText(text).then(() => {
+                        const copyBtn = card.querySelector('[data-copy]');
+                        copyBtn.textContent = 'Copied!';
+                        setTimeout(() => copyBtn.textContent = 'Copy', 1500);
+                    });
+                });
+                output.appendChild(card);
+            });
+
+            $('showContentResult').style.display = 'block';
+            $('showContentResult').scrollIntoView({ behavior: 'smooth' });
+
+        } catch (err) {
+            alert('Content generation error: ' + err.message);
+        } finally {
+            btn.disabled = false;
+            btn.innerHTML = '<span class="btn-icon">&starf;</span> Generate All Social Content';
+        }
+    });
+
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
 
     // ==========================================
     // PREVENT iOS BOUNCE/ZOOM

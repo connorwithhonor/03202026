@@ -34,12 +34,20 @@
             </div>
 
             <div class="menu-actions">
-                <button class="menu-btn primary-btn" id="btnNewScript">
+                <button class="menu-btn primary-btn" id="btnAIShow">
+                    <span class="btn-icon">&diamondsuit;</span>
+                    AI Show Generator
+                </button>
+                <button class="menu-btn primary-btn" id="btnFatShow" style="background: linear-gradient(135deg, #00B894, #00D2FF); box-shadow: 0 4px 20px rgba(0,184,148,0.4);">
+                    <span class="btn-icon">&hearts;</span>
+                    Last Addiction Show
+                </button>
+                <button class="menu-btn secondary-btn" id="btnNewScript">
                     <span class="btn-icon">+</span>
-                    New Script
+                    Custom Script
                 </button>
                 <button class="menu-btn secondary-btn" id="btnContentStudio">
-                    <span class="btn-icon">&diamondsuit;</span>
+                    <span class="btn-icon">&starf;</span>
                     Content Studio
                 </button>
                 <button class="menu-btn secondary-btn" id="btnImageStudio">
@@ -55,6 +63,102 @@
                     <a href="https://honorelevate.com" target="_blank">HonorElevate</a>
                     <a href="https://scv123.com" target="_blank">SCV123</a>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===================== SHOW GENERATOR SCREEN ===================== -->
+    <div id="showGenScreen" class="screen">
+        <div class="screen-header">
+            <button class="back-btn" data-target="menuScreen">&larr;</button>
+            <h2 id="showGenTitle">AI Show Generator</h2>
+            <div></div>
+        </div>
+        <div class="content-studio">
+            <!-- Status Display -->
+            <div id="showGenStatus" class="studio-section" style="display:none;">
+                <div class="status-card">
+                    <div class="status-spinner" id="showSpinner"></div>
+                    <p id="showStatusText">Initializing...</p>
+                    <div class="progress-steps">
+                        <div class="step" id="step1"><span class="step-dot"></span> Research</div>
+                        <div class="step" id="step2"><span class="step-dot"></span> Analyze</div>
+                        <div class="step" id="step3"><span class="step-dot"></span> Write Script</div>
+                        <div class="step" id="step4"><span class="step-dot"></span> Ready</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Options (shown before generation) -->
+            <div id="showGenOptions">
+                <div class="studio-section">
+                    <h3 id="showGenSubtitle">Today's AI Show</h3>
+                    <p class="helper-text" id="showGenDesc">Scans the last 24 hours of top-performing AI content from YouTube, Reddit, X, and news sources. Assembles a complete teleprompter script in your voice.</p>
+                </div>
+
+                <div class="studio-section">
+                    <h3>Additional Context (Optional)</h3>
+                    <textarea id="showCustomNotes" placeholder="Paste email notes, talking points, or anything you want included in today's show...&#10;&#10;Example: 'I saw something about OpenAI releasing a new model, make sure to cover that. Also mention the AI workshop I'm doing next week at HonorElevate.com'"></textarea>
+                </div>
+
+                <div class="studio-section">
+                    <h3>Lookback Period</h3>
+                    <div class="lookback-options">
+                        <label class="radio-card">
+                            <input type="radio" name="lookback" value="24" checked>
+                            <span>Last 24 Hours</span>
+                        </label>
+                        <label class="radio-card">
+                            <input type="radio" name="lookback" value="72">
+                            <span>Last 3 Days</span>
+                        </label>
+                        <label class="radio-card">
+                            <input type="radio" name="lookback" value="168">
+                            <span>Last Week</span>
+                        </label>
+                    </div>
+                </div>
+
+                <button class="menu-btn primary-btn" id="btnGenerateShow" style="margin-top: 8px;">
+                    <span class="btn-icon">&starf;</span>
+                    Generate Today's Show
+                </button>
+            </div>
+
+            <!-- Research Results Preview -->
+            <div id="showResearchPreview" class="studio-section" style="display:none;">
+                <h3>Research Found</h3>
+                <div id="researchSummary" class="content-output-box"></div>
+            </div>
+
+            <!-- Generated Script -->
+            <div id="showScriptResult" class="studio-section" style="display:none;">
+                <h3>Your Script is Ready</h3>
+                <textarea id="generatedScript" class="generated-script-area" readonly></textarea>
+                <div class="script-actions">
+                    <button class="menu-btn primary-btn" id="btnSendToTeleprompter">
+                        <span class="btn-icon">&rarr;</span>
+                        Send to Teleprompter
+                    </button>
+                    <button class="menu-btn secondary-btn" id="btnEditScript">
+                        <span class="btn-icon">&hellip;</span>
+                        Edit Script
+                    </button>
+                    <button class="menu-btn secondary-btn" id="btnCopyScript">
+                        <span class="btn-icon">&crarr;</span>
+                        Copy Script
+                    </button>
+                    <button class="menu-btn secondary-btn" id="btnGenerateAllContent">
+                        <span class="btn-icon">&starf;</span>
+                        Generate All Social Content
+                    </button>
+                </div>
+            </div>
+
+            <!-- AI-Generated Social Content -->
+            <div id="showContentResult" class="studio-section" style="display:none;">
+                <h3>Social Media Content</h3>
+                <div id="aiContentOutput" class="content-output"></div>
             </div>
         </div>
     </div>
